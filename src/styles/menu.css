@@ -1,0 +1,96 @@
+/* ═══ Hamburger Menu Fullscreen (CSS checkbox trick) ═══ */
+
+#menuToggle {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 60;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#menuToggle input {
+    display: block;
+    width: 44px;
+    height: 36px;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 62;
+}
+
+#menuToggle > span {
+    display: block;
+    width: 32px;
+    height: 3.5px;
+    margin-bottom: 6px;
+    position: relative;
+    background: black;
+    border-radius: 3px;
+    z-index: 61;
+    transform-origin: 5px 0;
+    transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1),
+                background 0.4s cubic-bezier(0.77, 0.2, 0.05, 1),
+                opacity 0.4s ease;
+}
+
+body.night #menuToggle > span { background: white; }
+
+#menuToggle > span:first-of-type { transform-origin: 0% 0%; }
+#menuToggle > span:nth-of-type(2) { transform-origin: 0% 100%; }
+
+#menuToggle input:checked ~ span {
+    opacity: 1;
+    transform: rotate(45deg) translate(1px, -2px);
+    background: white;
+}
+
+#menuToggle input:checked ~ span:nth-of-type(2) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-of-type(3) {
+    transform: rotate(-45deg) translate(-1px, 1px);
+}
+
+#menu {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    padding-top: 22vh;
+    background: black;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    z-index: -1;
+}
+
+#menuToggle input:checked ~ ul {
+    transform: translateY(0);
+}
+
+#menu a {
+    text-decoration: none;
+    color: white;
+}
+
+#menu li {
+    font-size: clamp(30px, 6vw, 52px);
+    font-weight: 600;
+    padding: 12px 0;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.25s ease;
+}
+
+#menu li:hover,
+#menu li.active { color: white; }

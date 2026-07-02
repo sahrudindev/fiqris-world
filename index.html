@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiqri's World</title>
+    <meta property="og:title" content="Fiqri's World"/>
+    <meta property="og:image" content="/img/thumbnail.svg"/>
+    <meta property="og:description" content="Portofolio 3D Interaktif — Fiqri"/>
+    <meta property="og:type" content="website"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+    <link rel="stylesheet" href="/src/styles/style.css">
+    <link rel="stylesheet" href="/src/styles/loader.css">
+    <link rel="stylesheet" href="/src/styles/menu.css">
+</head>
+
+<body>
+
+    <!-- ═══ Loading Screen ═══ -->
+    <div id="loadingscreen">
+        <div id="loader-wrapper">
+            <div class="title">Selamat datang di duniaku!</div>
+            <h1 style="text-align: right;"><span>Saya Fiqri, seorang developer yang antusias menciptakan pengalaman digital yang menarik dan menyenangkan.</span></h1>
+            <p style="text-align: right;"><span>Website ini terakhir diperbarui tahun 2026.</span></p>
+            <div id="progress">
+                <span id="loading">Memuat...</span>
+                <div id="progress-bar"></div>
+            </div>
+            <button class="button cta" id="start-button" style="display: none;">Jelajahi duniaku <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div id="logo">FIQRIs<br>WORLD</div>
+
+    <!-- ═══ Hamburger Menu ═══ -->
+    <nav role="navigation">
+        <div id="menuToggle">
+          <input type="checkbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+          <ul id="menu">
+            <a href='/'><li class="active">Fiqri's World</li></a>
+            <a href='/about.html'><li>Tentang</li></a>
+            <a href='/legal.html'><li>Legal</li></a>
+            <a href='/contact.html'><li>Kontak</li></a>
+          </ul>
+        </div>
+    </nav>
+
+    <!-- ═══ Toggle Siang/Malam ═══ -->
+    <label class="button-round" id="switch">
+        <input id="myCheckbox" type="checkbox" checked>
+        <i id="moon" class="icon fa fa-moon fa-xl"></i>
+        <i id="sun" class="icon fa fa-lightbulb fa-xl"></i>
+    </label>
+
+    <canvas class="webgl"></canvas>
+
+    <!-- ═══ Petunjuk Drag ═══ -->
+    <div class="sign" id="instructions">
+        <div id="animation"><i class="fa-solid fa-hand-pointer fa-2xl"></i></div>
+        <div class="helptext"><span class="helptext">Drag untuk menjelajah</span></div>
+    </div>
+
+    <!-- ═══ Popup Cerita (urutan = urutan rotasi 360°) ═══ -->
+    <div class="popup sign hidden">
+        <p2>Perjalanan saya dimulai di Indonesia, ketika saya mulai belajar desain dan pemrograman web.</p2>
+    </div>
+
+    <div class="popup project hidden">
+        <div class="content">
+            <img class="thumbnail" alt="">
+            <div class="text">
+                <h2 class="projecttitle"></h2>
+                <p class="subtitle"></p>
+            </div>
+        </div>
+        <button class="button primary" data-modal="myModal1">Lihat Tugas Akhir <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <div class="popup sign hidden">
+        <p2>Setelah lulus, saya mulai bekerja sebagai web developer.</p2>
+    </div>
+
+    <div class="popup sign hidden">
+        <p2>Saya memperdalam ilmu di bidang 3D web dan interaction design.</p2>
+    </div>
+
+    <div class="popup project hidden">
+        <div class="content">
+            <img class="thumbnail" alt="">
+            <div class="text">
+                <h2 class="projecttitle"></h2>
+                <p class="subtitle"></p>
+            </div>
+        </div>
+        <button class="button primary" data-modal="myModal2">Lihat Proyek <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <div class="popup sign hidden">
+        <p2>Hari ini saya bekerja sebagai developer. Berikut dua proyek terbaru saya.</p2>
+    </div>
+
+    <div class="popup project hidden">
+        <div class="content">
+            <img class="thumbnail" alt="">
+            <div class="text">
+                <h2 class="projecttitle"></h2>
+                <p class="subtitle"></p>
+            </div>
+        </div>
+        <button class="button primary" data-modal="myModal3">Lihat Proyek <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <div class="popup project hidden">
+        <div class="content">
+            <img class="thumbnail" alt="">
+            <div class="text">
+                <h2 class="projecttitle"></h2>
+                <p class="subtitle"></p>
+            </div>
+        </div>
+        <button class="button primary" data-modal="myModal4">Lihat Proyek <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <div class="popup sign hidden" id="contact">
+        <p2>Ingin terhubung?<br>
+            Lihat karya saya di <a href="https://github.com/sahrudindev" target="_blank" style="color: #5c30fd;">GitHub</a>
+            atau ikuti saya di <a href="https://www.instagram.com/" target="_blank" style="color: #5c30fd;">Instagram</a>
+        </p2>
+    </div>
+
+    <!-- ═══ Modal Proyek ═══ -->
+    <div class="modal" id="myModal1">
+        <div class="header">
+            <div class="header-wrapper"><div class="title projectheadline"></div></div>
+            <div class="button-round close"><i class="icon fa-solid fa-xmark fa-xl"></i></div>
+        </div>
+        <div class="modal-content-wrapper">
+            <h1 class="modal-subtitle"></h1>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal2">
+        <div class="header">
+            <div class="header-wrapper"><div class="title projectheadline"></div></div>
+            <div class="button-round close"><i class="icon fa-solid fa-xmark fa-xl"></i></div>
+        </div>
+        <div class="modal-content-wrapper">
+            <h1 class="modal-subtitle"></h1>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal3">
+        <div class="header">
+            <div class="header-wrapper"><div class="title projectheadline"></div></div>
+            <div class="button-round close"><i class="icon fa-solid fa-xmark fa-xl"></i></div>
+        </div>
+        <div class="modal-content-wrapper">
+            <h1 class="modal-subtitle"></h1>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal4">
+        <div class="header">
+            <div class="header-wrapper"><div class="title projectheadline"></div></div>
+            <div class="button-round close"><i class="icon fa-solid fa-xmark fa-xl"></i></div>
+        </div>
+        <div class="modal-content-wrapper">
+            <h1 class="modal-subtitle"></h1>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

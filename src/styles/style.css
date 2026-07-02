@@ -1,0 +1,341 @@
+/* ═══════════════════════════════════════════
+   Fiqri's World — Gaya utama
+   Palet: ungu #542BEC / #5c30fd / #757BFD
+   ═══════════════════════════════════════════ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+    overflow: hidden;
+    height: 100%;
+    color: black;
+}
+
+/* ── Canvas 3D: langit = CSS gradient di belakang canvas transparan ── */
+canvas.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    background: linear-gradient(0deg, hsl(200, 50%, 100%) 50%, hsl(214, 80%, 70%) 100%);
+    transition: background 1.2s ease;
+    touch-action: none;
+}
+
+/* ── Tipografi ── */
+h1 {
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+h2 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+p2 {
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.45;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+a { color: #5c30fd; }
+
+/* ── Logo ── */
+#logo {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    z-index: 10;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0.5px;
+    color: black;
+    pointer-events: none;
+    transition: color 1.2s ease;
+}
+
+body.night #logo { color: white; }
+
+/* ── Tombol ── */
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.button.primary {
+    color: white;
+    background-color: #542BEC;
+}
+
+.button.cta {
+    color: white;
+    background-color: black;
+    font-size: 18px;
+    padding: 16px 30px;
+}
+
+.button-round {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.button-round:hover { transform: scale(1.08); }
+
+/* ── Toggle Siang/Malam ── */
+#switch {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 10;
+}
+
+#switch input { display: none; }
+
+#switch .icon { position: absolute; transition: opacity 0.3s ease; }
+#switch #moon { opacity: 1; }
+#switch #sun { opacity: 0; }
+#switch input:checked ~ #moon { opacity: 1; }
+#switch input:checked ~ #sun { opacity: 0; }
+#switch input:not(:checked) ~ #moon { opacity: 0; }
+#switch input:not(:checked) ~ #sun { opacity: 1; }
+
+/* ── Petunjuk drag ── */
+.sign {
+    position: fixed;
+    left: 50%;
+    bottom: 12vh;
+    transform: translateX(-50%);
+    z-index: 5;
+    text-align: center;
+    pointer-events: none;
+}
+
+#instructions {
+    transition: opacity 0.6s ease;
+}
+
+#instructions.hidden { opacity: 0; }
+
+#animation {
+    color: #542BEC;
+    animation: dragHint 1.6s ease-in-out infinite;
+    margin-bottom: 18px;
+}
+
+@keyframes dragHint {
+    0%   { transform: translateX(-26px) rotate(-8deg); }
+    50%  { transform: translateX(26px) rotate(8deg); }
+    100% { transform: translateX(-26px) rotate(-8deg); }
+}
+
+.helptext {
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+    transition: color 1.2s ease;
+}
+
+body.night .helptext { color: white; }
+body.night #animation { color: #757BFD; }
+
+/* ── Popup cerita ── */
+.popup {
+    position: fixed;
+    left: 50%;
+    bottom: 10vh;
+    transform: translateX(-50%);
+    z-index: 6;
+    background: white;
+    border-radius: 20px;
+    padding: 26px 30px;
+    max-width: 420px;
+    width: calc(100vw - 48px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    pointer-events: auto;
+    text-align: left;
+}
+
+.popup.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(24px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.popup.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
+}
+
+.popup.project .content {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.popup .thumbnail {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 14px;
+    background: #eee;
+    flex-shrink: 0;
+}
+
+.popup .subtitle {
+    font-size: 15px;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* ── Modal proyek ── */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 70; /* di atas menu hamburger agar tombol close tidak tertutup */
+    background: white;
+    overflow-y: auto;
+    display: none;
+}
+
+.modal.open { display: block; }
+
+.modal .header {
+    position: relative;
+    height: 46vh;
+    min-height: 300px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,1));
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding: 48px;
+}
+
+.modal .header .title {
+    color: white;
+    font-size: 56px;
+}
+
+.modal .close {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+}
+
+.modal-content-wrapper {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+}
+
+.modal-content-wrapper h1 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 36px 0 16px;
+}
+
+.modal-content-wrapper p2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 14px;
+}
+
+.project-img {
+    width: 100%;
+    border-radius: 16px;
+    margin: 22px 0;
+    display: block;
+}
+
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin: 22px 0;
+    border-radius: 16px;
+}
+
+.embed-container iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.credits {
+    margin-top: 48px;
+    font-size: 14px;
+    color: #999;
+}
+
+/* ── Halaman sekunder (about/legal/contact) ── */
+.page {
+    height: 100%;
+    overflow-y: auto;
+    background: linear-gradient(0deg, hsl(200, 50%, 100%) 50%, hsl(214, 80%, 70%) 100%);
+}
+
+.page-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 160px 24px 96px;
+}
+
+.page-content h1 { font-size: 56px; font-weight: 700; margin-bottom: 32px; }
+.page-content p { font-size: 19px; line-height: 1.6; margin-bottom: 18px; }
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+    .title { font-size: 30px; }
+    h1 { font-size: 30px; }
+    .popup { padding: 20px 22px; bottom: 8vh; }
+    .popup .thumbnail { width: 72px; height: 72px; }
+    .modal .header { padding: 24px; height: 36vh; }
+    .modal .header .title { font-size: 34px; }
+    #logo { top: 22px; left: 22px; }
+    #switch { bottom: 22px; right: 22px; }
+    .page-content h1 { font-size: 38px; }
+}
