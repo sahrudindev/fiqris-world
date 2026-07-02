@@ -68,6 +68,27 @@ export function buildIsland() {
     road.receiveShadow = true;
     island.add(road);
 
+    // Garis putus-putus di tengah jalan
+    const dashMat = new THREE.MeshLambertMaterial({ color: 0xc9bfae });
+    const dashGeo = new THREE.BoxGeometry(0.1, 0.012, 0.55);
+    for (let i = 0; i < 36; i++) {
+        const angle = (i / 36) * Math.PI * 2;
+        const dash = new THREE.Mesh(dashGeo, dashMat);
+        dash.position.copy(polar(angle, ROAD_RADIUS, 0.02));
+        dash.rotation.y = angle;
+        island.add(dash);
+    }
+
+    // Kolam kecil di dekat pelabuhan (babak kontak)
+    const pond = new THREE.Mesh(
+        new THREE.CircleGeometry(2.1, 32),
+        new THREE.MeshLambertMaterial({ color: 0x9fd4f5 })
+    );
+    pond.rotation.x = -Math.PI / 2;
+    pond.position.copy(polar(chapterAngle(8), 10.6, 0.015));
+    pond.receiveShadow = true;
+    island.add(pond);
+
     scene.add(island);
     return island;
 }
@@ -78,14 +99,16 @@ export function buildIsland() {
  */
 export async function buildLandmarks() {
     const defs = [
-        { file: 'school.glb',  chapter: 0, height: 2.6, radius: 8.6 },  // masa belajar
-        { file: 'sign.glb',    chapter: 1, height: 1.3, radius: 9.6 },  // tugas akhir
-        { file: 'office.glb',  chapter: 2, height: 3.2, radius: 8.4 },  // kerja pertama
-        { file: 'sign.glb',    chapter: 4, height: 1.3, radius: 9.6 },  // proyek
-        { file: 'house.glb',   chapter: 5, height: 2.8, radius: 8.4 },  // hari ini (rumah)
-        { file: 'sign.glb',    chapter: 6, height: 1.3, radius: 9.6 },  // proyek
-        { file: 'sign.glb',    chapter: 7, height: 1.3, radius: 9.6 },  // proyek
-        { file: 'boat.glb',    chapter: 8, height: 2.2, radius: 10.2 }, // kontak (pelabuhan)
+        { file: 'school.glb',  chapter: 0, height: 2.6, radius: 8.6 },  // bangku sekolah
+        { file: 'sign.glb',    chapter: 1, height: 1.3, radius: 9.6 },  // tugas akhir / lulus
+        { file: 'office.glb',  chapter: 2, height: 2.8, radius: 8.4 },  // PT. LSKK (machine learning)
+        { file: 'sign.glb',    chapter: 3, height: 1.3, radius: 9.6 },  // proyek LSKK
+        { file: 'bps.glb',     chapter: 4, height: 3.0, radius: 8.4 },  // BPS
+        { file: 'sign.glb',    chapter: 5, height: 1.3, radius: 9.6 },  // proyek BPS
+        { file: 'idn.glb',     chapter: 6, height: 3.0, radius: 8.4 },  // IDNFinancials
+        { file: 'sign.glb',    chapter: 7, height: 1.3, radius: 9.6 },  // proyek IDNFinancials
+        { file: 'house.glb',   chapter: 8, height: 2.4, radius: 8.6 },  // rumah (kontak)
+        { file: 'boat.glb',    chapter: 8, height: 2.2, radius: 10.6 }, // pelabuhan kecil
     ];
 
     await Promise.all(defs.map(async (def) => {

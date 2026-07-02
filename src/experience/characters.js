@@ -40,20 +40,25 @@ export async function buildCharacters() {
         clearings.push({ x: group.position.x, z: group.position.z, r: 2 });
     }
 
-    // "Saya" + kerumunan kecil — karakter animasi idle di dekat pusat
-    const soldierGltf = await loadModel('/models/Soldier.glb');
+    // Kerumunan kecil — karakter low-poly beranimasi tersebar di pulau
+    const manGltf = await loadModel('/models/man.glb');
     const crowdSpots = [
-        { angle: chapterAngle(5) + 0.18, radius: 6.6, clip: 'Idle' },
-        { angle: chapterAngle(5) - 0.12, radius: 7.4, clip: 'Idle' },
-        { angle: chapterAngle(2) + 0.2,  radius: 6.8, clip: 'Idle' },
+        { angle: chapterAngle(5) + 0.18, radius: 6.6, clip: /idle/i },
+        { angle: chapterAngle(5) - 0.12, radius: 7.4, clip: /clapping/i },
+        { angle: chapterAngle(2) + 0.2,  radius: 6.8, clip: /idle/i },
+        { angle: chapterAngle(0) - 0.15, radius: 6.5, clip: /standing/i },
     ];
     for (const spot of crowdSpots) {
-        const model = enableShadows(SkeletonUtils.clone(soldierGltf.scene));
-        model.scale.setScalar(0.75); // tinggi asli ±1.8 unit → ±1.35 unit
+        const model = enableShadows(fitObject(SkeletonUtils.clone(manGltf.scene), 1.35));
         const group = wrap(model);
         group.position.copy(polar(spot.angle, spot.radius));
         group.rotation.y = Math.random() * Math.PI * 2;
-        playClip(model, soldierGltf.animations, spot.clip);
+        const clip = manGltf.animations.find((a) => spot.clip.test(a.name));
+        if (clip) {
+            const mixer = new THREE.AnimationMixer(model);
+            mixer.clipAction(clip).play();
+            mixers.push(mixer);
+        }
         scene.add(group);
         clearings.push({ x: group.position.x, z: group.position.z, r: 1.4 });
     }

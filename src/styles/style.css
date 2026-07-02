@@ -24,9 +24,33 @@ canvas.webgl {
     top: 0;
     left: 0;
     outline: none;
-    background: linear-gradient(0deg, hsl(200, 50%, 100%) 50%, hsl(214, 80%, 70%) 100%);
+    background:
+        linear-gradient(0deg,
+            hsl(32, 100%, 93%) 0%,
+            hsl(205, 65%, 92%) 42%,
+            hsl(213, 80%, 72%) 78%,
+            hsl(220, 75%, 62%) 100%);
     transition: background 1.2s ease;
     touch-action: none;
+}
+
+/* Langit malam bertabur bintang */
+body.night canvas.webgl {
+    background:
+        radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,0.9), transparent 60%),
+        radial-gradient(1px 1px at 28% 8%,  rgba(255,255,255,0.7), transparent 60%),
+        radial-gradient(2px 2px at 41% 24%, rgba(255,255,255,0.8), transparent 60%),
+        radial-gradient(1px 1px at 57% 11%, rgba(255,255,255,0.6), transparent 60%),
+        radial-gradient(1.5px 1.5px at 68% 21%, rgba(255,255,255,0.9), transparent 60%),
+        radial-gradient(1px 1px at 79% 7%,  rgba(255,255,255,0.7), transparent 60%),
+        radial-gradient(2px 2px at 88% 27%, rgba(255,255,255,0.75), transparent 60%),
+        radial-gradient(1px 1px at 18% 34%, rgba(255,255,255,0.5), transparent 60%),
+        radial-gradient(1.5px 1.5px at 50% 32%, rgba(255,255,255,0.55), transparent 60%),
+        radial-gradient(1px 1px at 94% 15%, rgba(255,255,255,0.65), transparent 60%),
+        linear-gradient(0deg,
+            hsl(222, 45%, 22%) 0%,
+            hsl(222, 55%, 14%) 55%,
+            hsl(224, 70%, 7%) 100%);
 }
 
 /* ── Tipografi ── */
@@ -183,12 +207,15 @@ body.night #animation { color: #757BFD; }
     bottom: 10vh;
     transform: translateX(-50%);
     z-index: 6;
-    background: white;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 22px;
     padding: 26px 30px;
     max-width: 420px;
     width: calc(100vw - 48px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 18px 50px rgba(28, 15, 80, 0.22);
     pointer-events: auto;
     text-align: left;
 }

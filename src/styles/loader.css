@@ -4,7 +4,10 @@
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: white;
+    background:
+        radial-gradient(1100px 600px at 85% 12%, rgba(117, 123, 253, 0.16), transparent 60%),
+        radial-gradient(900px 500px at 8% 88%, rgba(84, 43, 236, 0.10), transparent 55%),
+        white;
     display: flex;
     align-items: center;
     justify-content: center;

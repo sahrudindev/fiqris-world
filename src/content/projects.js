@@ -2,8 +2,9 @@
  * Data proyek — struktur meniru skema Sanity CMS milik referensi:
  * { title, subtitle, thumbnail, herobanner, sections[] }
  *
- * Urutan array = urutan popup proyek di pulau (modal 1–4).
- * Ganti isi di sini dengan proyek Anda sendiri; section bertipe:
+ * Urutan array = urutan popup proyek di pulau (modal 1–4),
+ * mengikuti alur cerita: sekolah → lulus → PT. LSKK → BPS → IDNFinancials.
+ * Section bertipe:
  *   - subheadline : judul bagian
  *   - text        : paragraf
  *   - image       : gambar lebar penuh
@@ -23,35 +24,35 @@ export const projects = [
         ],
     },
     {
-        title: 'Proyek Studi',
-        subtitle: 'Eksperimen 3D web interaktif',
+        title: 'Machine Learning — PT. LSKK',
+        subtitle: 'Pekerjaan pertama saya setelah lulus',
         thumbnail: '/img/thumb2.svg',
         herobanner: '/img/hero2.svg',
         sections: [
-            { type: 'subheadline', value: 'Tentang Proyek' },
-            { type: 'text', value: 'Ceritakan proyek eksplorasi Anda — misalnya eksperimen Three.js, WebGL, atau interaksi baru yang Anda coba.' },
+            { type: 'subheadline', value: 'Tentang Pekerjaan' },
+            { type: 'text', value: 'Ceritakan proyek machine learning yang Anda kerjakan di PT. LSKK — model yang dibangun, data yang diolah, dan dampaknya.' },
             { type: 'image', value: '/img/thumb2.svg' },
         ],
     },
     {
-        title: 'Proyek Klien A',
-        subtitle: 'Website interaktif untuk klien',
+        title: 'BPS — Badan Pusat Statistik',
+        subtitle: 'Berkontribusi pada data statistik nasional',
         thumbnail: '/img/thumb3.svg',
         herobanner: '/img/hero3.svg',
         sections: [
             { type: 'subheadline', value: 'Ringkasan' },
-            { type: 'text', value: 'Deskripsikan peran Anda, tantangan teknis, dan dampak yang dihasilkan untuk klien.' },
+            { type: 'text', value: 'Deskripsikan peran dan proyek Anda selama di BPS — sistem yang dibangun, teknologi yang dipakai, dan hasilnya.' },
             { type: 'image', value: '/img/thumb3.svg' },
         ],
     },
     {
-        title: 'Proyek Klien B',
-        subtitle: 'Aplikasi web modern',
+        title: 'IDNFinancials',
+        subtitle: 'Tempat saya berkarya hari ini',
         thumbnail: '/img/thumb4.svg',
         herobanner: '/img/hero4.svg',
         sections: [
             { type: 'subheadline', value: 'Ringkasan' },
-            { type: 'text', value: 'Deskripsikan proyek kedua Anda di sini, lengkap dengan gambar atau video demo.' },
+            { type: 'text', value: 'Deskripsikan pekerjaan Anda di IDNFinancials — produk yang dikembangkan, peran Anda di tim, dan pencapaian terbaik.' },
             { type: 'image', value: '/img/thumb4.svg' },
         ],
     },
