@@ -103,9 +103,9 @@ export async function buildCharacters() {
 
     // Mug kopi berputar — dekorasi khas referensi (di dekat rumah)
     const mugGltf = await loadModel('/models/mug.glb');
-    const mug = enableShadows(fitObject(mugGltf.scene, 0.9));
+    const mug = enableShadows(fitObject(mugGltf.scene, 0.5));
     const mugGroup = wrap(mug);
-    mugGroup.position.copy(polar(chapterAngle(5) - 0.3, 9.4, 0));
+    mugGroup.position.copy(polar(chapterAngle(8) + 0.35, 7.4, 0)); // ngopi di dekat rumah
     scene.add(mugGroup);
     clearings.push({ x: mugGroup.position.x, z: mugGroup.position.z, r: 1.2 });
 

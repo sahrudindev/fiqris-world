@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
+import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
 import { scene } from './scene.js';
 import { loadModel } from './loaders.js';
 import { ISLAND_RADIUS, ROAD_RADIUS, clearings } from './island.js';
@@ -8,14 +9,39 @@ import { ISLAND_RADIUS, ROAD_RADIUS, clearings } from './island.js';
 const BLOSSOM_PALETTE = [0xbdd1ff, 0xd5e1ff, 0xeef2ff];
 const TREE_PALETTE = [0x320daa, 0x411bc7, 0x5028e3];
 
-/** Ambil semua mesh varian dari sebuah pack model, geometri dibake & dinormalisasi */
+/**
+ * Ambil varian objek dari sebuah pack model.
+ * Satu objek (mis. satu pohon) bisa terdiri dari beberapa primitive
+ * (batang + daun), jadi seluruh mesh di bawah satu node digabung
+ * menjadi satu geometri agar tidak terpecah saat instancing.
+ */
 function extractVariants(gltfScene, targetHeight) {
-    const variants = [];
     gltfScene.updateWorldMatrix(true, true);
-    gltfScene.traverse((node) => {
-        if (!node.isMesh) return;
-        const geometry = node.geometry.clone();
-        geometry.applyMatrix4(node.matrixWorld);
+
+    // turunkan level jika root hanya wrapper tunggal
+    let roots = gltfScene.children;
+    while (roots.length === 1 && !roots[0].isMesh && roots[0].children.length > 0) {
+        roots = roots[0].children;
+    }
+
+    const variants = [];
+    for (const node of roots) {
+        const parts = [];
+        node.traverse((child) => {
+            if (!child.isMesh) return;
+            const geometry = child.geometry.clone();
+            for (const name of Object.keys(geometry.attributes)) {
+                if (name !== 'position' && name !== 'normal') geometry.deleteAttribute(name);
+            }
+            geometry.applyMatrix4(child.matrixWorld);
+            parts.push(geometry);
+        });
+        if (!parts.length) continue;
+
+        const geometry = parts.length === 1
+            ? parts[0]
+            : BufferGeometryUtils.mergeGeometries(parts, false);
+        if (!geometry) continue;
         geometry.computeBoundingBox();
         const box = geometry.boundingBox;
         const size = box.getSize(new THREE.Vector3());
@@ -24,7 +50,7 @@ function extractVariants(gltfScene, targetHeight) {
         geometry.translate(-center.x, -box.min.y, -center.z);
         geometry.scale(scale, scale, scale);
         variants.push(geometry);
-    });
+    }
     return variants;
 }
 

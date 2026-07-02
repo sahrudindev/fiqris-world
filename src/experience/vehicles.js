@@ -34,7 +34,7 @@ export async function buildVehicles() {
 
     // ── Sepeda otomatis ──
     const bicycleGltf = await loadModel('/models/bicycle.glb');
-    const bicycle = enableShadows(fitObject(bicycleGltf.scene, 1.15));
+    const bicycle = enableShadows(fitObject(bicycleGltf.scene, 0.9));
     const bicycleGroup = wrap(bicycle);
     scene.add(bicycleGroup);
 
