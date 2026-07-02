@@ -105,7 +105,7 @@ export async function buildCharacters() {
     const mugGltf = await loadModel('/models/mug.glb');
     const mug = enableShadows(fitObject(mugGltf.scene, 0.5));
     const mugGroup = wrap(mug);
-    mugGroup.position.copy(polar(chapterAngle(8) + 0.35, 7.4, 0)); // ngopi di dekat rumah
+    mugGroup.position.copy(polar(chapterAngle(8) + 0.22, 8.9, 0)); // ngopi di samping rumah
     scene.add(mugGroup);
     clearings.push({ x: mugGroup.position.x, z: mugGroup.position.z, r: 1.2 });
 
